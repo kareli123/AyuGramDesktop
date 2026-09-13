@@ -1,0 +1,173 @@
+// Apple Liquid Glass — Dark
+//
+// An iOS/macOS-inspired dark palette for AyuGram / Telegram Desktop:
+// graphite panels, iOS system blue accent (#0A84FF), iMessage-style blue
+// outgoing bubbles and hairline separators.
+//
+// HOW TO USE (no build required):
+//   Settings -> Chat Settings -> Themes -> (three dots) -> "Create from file"
+//   ...or simply drag this .tdesktop-palette file onto the app window.
+// Any key not listed here falls back to the default night theme.
+//
+// Colors are RGB (#rrggbb) or RGBA (#rrggbbaa) — alpha is the LAST byte.
+
+//// GLOBAL WINDOW ////
+windowBg: #1c1c1e;                 // main graphite background
+windowFg: #ffffff;                 // primary text
+windowBgOver: #2c2c2e;             // hovered rows / panels
+windowBgRipple: #3a3a3c;           // ripple on tap
+windowFgOver: #ffffff;
+windowSubTextFg: #98989f;          // iOS secondary label
+windowSubTextFgOver: #aeaeb2;
+windowBoldFg: #ffffff;
+windowBoldFgOver: #ffffff;
+windowActiveTextFg: #0a84ff;       // iOS system blue (links)
+windowShadowFg: #000000;
+windowShadowFgFallback: #1c1c1e;
+
+windowBgActive: #0a84ff;           // accent fill
+windowFgActive: #ffffff;
+windowActiveTextFgActive: #ffffff;
+
+//// ACCENT BUTTONS ////
+activeButtonBg: #0a84ff;
+activeButtonBgOver: #339dff;
+activeButtonBgRipple: #0060df;
+activeButtonFg: #ffffff;
+activeButtonFgOver: #ffffff;
+activeButtonSecondaryFg: #eaf4ff;
+activeButtonSecondaryFgOver: #ffffff;
+
+lightButtonBg: #1c1c1e;
+lightButtonBgOver: #2c2c2e;
+lightButtonBgRipple: #3a3a3c;
+lightButtonFg: #0a84ff;
+lightButtonFgOver: #339dff;
+
+//// SEPARATORS / SHADOWS ////
+shadowFg: #00000066;               // soft translucent shadow
+titleShadow: #ffffff08;            // hairline highlight
+dividerFg: #2c2c2e;
+
+//// SCROLLBAR ////
+scrollBarBg: #ffffff26;
+scrollBarBgOver: #ffffff40;
+scrollBg: #00000000;
+scrollBgOver: #00000000;
+
+//// TITLE BAR ////
+titleBg: #1c1c1e;
+titleBgActive: #1c1c1e;
+titleButtonFg: #98989f;
+titleButtonFgOver: #ffffff;
+titleButtonBgOver: #2c2c2e;
+titleButtonCloseFg: #98989f;
+titleButtonCloseFgOver: #ffffff;
+titleButtonCloseBgOver: #ff453a;   // iOS red
+titleFg: #98989f;
+titleFgActive: #ffffff;
+
+//// LEFT SIDEBAR (folders) ////
+sideBarBg: #000000;
+sideBarBgActive: #0a84ff;
+sideBarBgRipple: #2c2c2e;
+sideBarTextFg: #98989f;
+sideBarTextFgActive: #ffffff;
+sideBarIconFg: #98989f;
+sideBarIconFgActive: #ffffff;
+sideBarBadgeBg: #ff453a;
+sideBarBadgeFg: #ffffff;
+
+//// DIALOGS LIST ////
+dialogsBg: #1c1c1e;
+dialogsNameFg: #ffffff;
+dialogsChatIconFg: #98989f;
+dialogsDateFg: #98989f;
+dialogsTextFg: #98989f;
+dialogsTextFgService: #0a84ff;
+dialogsDraftFg: #ff453a;
+dialogsVerifiedIconBg: #0a84ff;
+dialogsVerifiedIconFg: #ffffff;
+dialogsSendingIconFg: #98989f;
+dialogsSentIconFg: #0a84ff;
+dialogsUnreadBg: #0a84ff;
+dialogsUnreadBgMuted: #48484a;
+dialogsUnreadFg: #ffffff;
+
+dialogsBgOver: #2c2c2e;
+dialogsNameFgOver: #ffffff;
+dialogsTextFgOver: #aeaeb2;
+
+dialogsBgActive: #0a84ff;
+dialogsNameFgActive: #ffffff;
+dialogsChatIconFgActive: #ffffff;
+dialogsDateFgActive: #ffffff;
+dialogsTextFgActive: #ffffffe6;
+dialogsTextFgServiceActive: #ffffff;
+dialogsDraftFgActive: #ffffff;
+dialogsSendingIconFgActive: #ffffff;
+dialogsSentIconFgActive: #ffffff;
+dialogsUnreadBgActive: #ffffff;
+dialogsUnreadFgActive: #0a84ff;
+dialogsRippleBg: #3a3a3c;
+dialogsRippleBgActive: #339dff;
+
+//// SEARCH FIELD ////
+dialogsMenuIconFg: #98989f;
+dialogsMenuIconFgOver: #ffffff;
+
+//// CHAT HISTORY ////
+historyComposeAreaBg: #1c1c1e;
+historyComposeAreaFg: #ffffff;
+historyComposeAreaFgService: #0a84ff;
+historyComposeIconFg: #98989f;
+historyComposeIconFgOver: #0a84ff;
+historySendIconFg: #0a84ff;
+historySendIconFgOver: #339dff;
+historyScrollBarBg: #ffffff26;
+historyScrollBarBgOver: #ffffff40;
+
+// Incoming bubbles — graphite glass
+msgInBg: #2c2c2e;
+msgInBgSelected: #0a84ff66;
+msgInShadow: #00000000;
+msgInShadowSelected: #00000000;
+historyTextInFg: #ffffff;
+msgInDateFg: #98989f;
+msgInServiceFg: #0a84ff;
+
+// Outgoing bubbles — iMessage blue
+msgOutBg: #0a84ff;
+msgOutBgSelected: #339dff;
+msgOutShadow: #00000000;
+msgOutShadowSelected: #00000000;
+historyTextOutFg: #ffffff;
+msgOutDateFg: #ffffffb2;
+msgOutServiceFg: #ffffff;
+
+// Ticks / checks
+msgOutCheckFg: #ffffff;
+msgOutCheckFgSelected: #ffffff;
+msgInCheckFg: #0a84ff;
+
+// Service (date pills, "channel created", etc.)
+msgServiceBg: #00000059;
+msgServiceFg: #ffffff;
+msgServiceBgSelected: #0a84ff80;
+
+//// BOXES / MENUS ////
+boxBg: #1c1c1e;
+boxTextFg: #ffffff;
+boxTitleFg: #ffffff;
+boxDividerBg: #000000;
+menuBg: #2c2c2e;
+menuBgOver: #3a3a3c;
+menuIconFg: #98989f;
+menuIconFgOver: #ffffff;
+menuFg: #ffffff;
+menuFgOver: #ffffff;
+
+//// FIELDS ////
+inputBorderFg: #3a3a3c;
+activeLineFg: #0a84ff;
+activeLineFgError: #ff453a;

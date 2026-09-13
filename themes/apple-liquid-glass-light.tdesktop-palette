@@ -1,0 +1,137 @@
+// Apple Liquid Glass — Light
+//
+// iOS/macOS light palette: system gray background (#F2F2F7), white cards,
+// iOS blue accent (#007AFF), iMessage gray incoming + blue outgoing bubbles,
+// hairline separators (#C6C6C8).
+//
+// HOW TO USE (no build required):
+//   Settings -> Chat Settings -> Themes -> (three dots) -> "Create from file"
+//   ...or drag this .tdesktop-palette file onto the app window.
+// Any key not listed here falls back to the default day theme.
+
+//// GLOBAL WINDOW ////
+windowBg: #f2f2f7;                 // iOS systemGroupedBackground
+windowFg: #000000;
+windowBgOver: #e5e5ea;
+windowBgRipple: #d1d1d6;
+windowFgOver: #000000;
+windowSubTextFg: #8e8e93;          // iOS secondary label
+windowSubTextFgOver: #6d6d72;
+windowBoldFg: #000000;
+windowBoldFgOver: #000000;
+windowActiveTextFg: #007aff;       // iOS system blue
+windowShadowFg: #000000;
+windowShadowFgFallback: #f2f2f7;
+
+windowBgActive: #007aff;
+windowFgActive: #ffffff;
+windowActiveTextFgActive: #ffffff;
+
+//// ACCENT BUTTONS ////
+activeButtonBg: #007aff;
+activeButtonBgOver: #3395ff;
+activeButtonBgRipple: #0062cc;
+activeButtonFg: #ffffff;
+activeButtonFgOver: #ffffff;
+
+lightButtonBg: #ffffff;
+lightButtonBgOver: #f2f2f7;
+lightButtonBgRipple: #e5e5ea;
+lightButtonFg: #007aff;
+lightButtonFgOver: #3395ff;
+
+//// SEPARATORS / SHADOWS ////
+shadowFg: #0000001a;
+dividerFg: #c6c6c8;
+
+//// SCROLLBAR ////
+scrollBarBg: #00000026;
+scrollBarBgOver: #00000040;
+
+//// TITLE BAR ////
+titleBg: #f2f2f7;
+titleBgActive: #f2f2f7;
+titleButtonFg: #8e8e93;
+titleButtonFgOver: #000000;
+titleButtonBgOver: #e5e5ea;
+titleButtonCloseBgOver: #ff3b30;
+titleFg: #8e8e93;
+titleFgActive: #000000;
+
+//// LEFT SIDEBAR ////
+sideBarBg: #e5e5ea;
+sideBarBgActive: #007aff;
+sideBarTextFg: #8e8e93;
+sideBarTextFgActive: #ffffff;
+sideBarIconFg: #8e8e93;
+sideBarIconFgActive: #ffffff;
+
+//// DIALOGS LIST ////
+dialogsBg: #ffffff;
+dialogsNameFg: #000000;
+dialogsDateFg: #8e8e93;
+dialogsTextFg: #8e8e93;
+dialogsTextFgService: #007aff;
+dialogsDraftFg: #ff3b30;
+dialogsUnreadBg: #007aff;
+dialogsUnreadBgMuted: #c7c7cc;
+dialogsUnreadFg: #ffffff;
+
+dialogsBgOver: #f2f2f7;
+dialogsNameFgOver: #000000;
+dialogsTextFgOver: #6d6d72;
+
+dialogsBgActive: #007aff;
+dialogsNameFgActive: #ffffff;
+dialogsDateFgActive: #ffffff;
+dialogsTextFgActive: #ffffffe6;
+dialogsTextFgServiceActive: #ffffff;
+dialogsUnreadBgActive: #ffffff;
+dialogsUnreadFgActive: #007aff;
+dialogsRippleBg: #d1d1d6;
+dialogsRippleBgActive: #3395ff;
+
+//// CHAT HISTORY ////
+historyComposeAreaBg: #ffffff;
+historyComposeAreaFg: #000000;
+historyComposeIconFg: #8e8e93;
+historyComposeIconFgOver: #007aff;
+historySendIconFg: #007aff;
+
+// Incoming bubbles — iMessage gray
+msgInBg: #e9e9eb;
+msgInBgSelected: #007aff33;
+msgInShadow: #00000000;
+historyTextInFg: #000000;
+msgInDateFg: #8e8e93;
+msgInServiceFg: #007aff;
+
+// Outgoing bubbles — iMessage blue
+msgOutBg: #007aff;
+msgOutBgSelected: #3395ff;
+msgOutShadow: #00000000;
+historyTextOutFg: #ffffff;
+msgOutDateFg: #ffffffb2;
+msgOutServiceFg: #ffffff;
+
+msgOutCheckFg: #ffffff;
+msgInCheckFg: #007aff;
+
+msgServiceBg: #0000000d;
+msgServiceFg: #3c3c43;
+
+//// BOXES / MENUS ////
+boxBg: #ffffff;
+boxTextFg: #000000;
+boxTitleFg: #000000;
+boxDividerBg: #f2f2f7;
+menuBg: #ffffff;
+menuBgOver: #f2f2f7;
+menuIconFg: #8e8e93;
+menuIconFgOver: #000000;
+menuFg: #000000;
+
+//// FIELDS ////
+inputBorderFg: #c6c6c8;
+activeLineFg: #007aff;
+activeLineFgError: #ff3b30;
