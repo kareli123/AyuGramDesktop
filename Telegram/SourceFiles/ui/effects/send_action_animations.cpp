@@ -126,39 +126,56 @@ void TypingAnimation::paint(
 		int y,
 		int outerWidth,
 		crl::time now) {
+	// Apple-style "liquid" typing indicator: each dot travels through a
+	// smooth vertical wave (staggered phase), gently scaling up and lifting
+	// at the crest while fading in, then settling back — a soft, organic
+	// motion instead of a hard radius pop.
 	PainterHighQualityEnabler hq(p);
 	p.setPen(Qt::NoPen);
-	p.setBrush(color);
-	auto frameMs = frameTime(now);
+
+	constexpr auto kPi = 3.14159265358979323846;
+	// A small "rest" gap so the wave clearly restarts each period.
+	constexpr auto kActivePart = 0.72;
+
+	const auto full = float64(std::max(period(), 1));
+	const auto frameMs = float64(frameTime(now));
+
+	const auto smallR = st::historySendActionTypingSmallNumerator
+		/ st::historySendActionTypingDenominator;
+	const auto largeR = st::historySendActionTypingLargeNumerator
+		/ st::historySendActionTypingDenominator;
+	const auto grow = float64(largeR - smallR);
+	// Vertical lift is tied to how much the dot grows, keeps scale sane.
+	const auto lift = grow * 1.35;
+
 	auto position = QPointF(x + 0.5, y - 0.5)
 		+ st::historySendActionTypingPosition;
+
 	for (auto i = 0; i != kTypingDotsCount; ++i) {
-		auto r = st::historySendActionTypingSmallNumerator
-			/ st::historySendActionTypingDenominator;
-		if (frameMs < 2 * st::historySendActionTypingHalfPeriod) {
-			const auto delta = (st::historySendActionTypingLargeNumerator
-					- st::historySendActionTypingSmallNumerator)
-				/ st::historySendActionTypingDenominator;
-			if (frameMs < st::historySendActionTypingHalfPeriod) {
-				r += delta
-					* anim::easeOutCirc(
-						1.,
-						float64(frameMs)
-							/ st::historySendActionTypingHalfPeriod);
-			} else {
-				r += delta
-					* (1. - anim::easeOutCirc(
-						1.,
-						float64(frameMs
-								- st::historySendActionTypingHalfPeriod)
-							/ st::historySendActionTypingHalfPeriod));
-			}
+		// Stagger each dot evenly across the period so the crest visibly
+		// "runs" left-to-right like a wave.
+		const auto phase = full * float64(i) / float64(kTypingDotsCount);
+		auto local = std::fmod(frameMs - phase + full, full) / full;
+
+		auto wave = 0.;
+		if (local < kActivePart) {
+			// Single smooth bump (0 -> 1 -> 0) via a sine half-wave, then
+			// softened with smoothstep for that gentle Apple easing.
+			const auto t = local / kActivePart;
+			const auto s = std::sin(t * kPi);
+			wave = s * s * (3. - 2. * s);
 		}
-		p.drawEllipse(position, r, r);
+
+		const auto r = smallR + grow * wave;
+		const auto dy = -lift * wave;
+
+		p.setOpacity(0.45 + 0.55 * wave);
+		p.setBrush(color);
+		p.drawEllipse(QPointF(position.x(), position.y() + dy), r, r);
+
 		position.setX(position.x() + st::historySendActionTypingDelta);
-		frameMs = (frameMs + period() - st::historySendActionTypingDeltaTime)
-			% period();
 	}
+	p.setOpacity(1.);
 }
 
 class RecordAnimation : public SendActionAnimation::Impl {
