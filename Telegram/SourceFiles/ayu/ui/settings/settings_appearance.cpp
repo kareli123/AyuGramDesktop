@@ -197,6 +197,27 @@ void BuildAppearance(SectionBuilder &builder, AyuSectionBuilder &ayu) {
 		.getter = &AyuSettings::materialSwitches,
 		.setter = &AyuSettings::setMaterialSwitches,
 	});
+
+#ifdef Q_OS_WIN
+	// Uses a DWM backdrop, so there is nothing to toggle on other systems.
+	const auto glassController = builder.controller();
+	ayu.addToggle({
+		.id = u"ayu/windowGlassBackdrop"_q,
+		.title = tr::ayu_WindowGlassBackdrop(),
+		.getter = [] {
+			return AyuSettings::getInstance().windowGlassBackdrop();
+		},
+		.setter = [=](bool val) {
+			AyuSettings::getInstance().setWindowGlassBackdrop(val);
+			if (glassController) {
+				ShowRestartPrompt(glassController);
+			}
+		},
+	});
+	builder.addSkip();
+	builder.addDividerText(tr::ayu_WindowGlassBackdropDescription());
+	builder.addSkip();
+#endif // Q_OS_WIN
 	ayu.addSettingToggle({
 		.id = u"ayu/disableCustomBackgrounds"_q,
 		.altIds = { u"ayu/customThemes"_q },

@@ -109,12 +109,13 @@ private:
 // becomes visible where the client area is not painted opaque — pair this
 // with a translucent palette (see themes/ in the repository root).
 //
-// Experimental, so it is opt-in via the AYUGRAM_GLASS environment variable:
+// Turned on in Settings -> AyuGram Preferences -> Appearance. The material
+// can be picked with the AYUGRAM_GLASS environment variable while we settle
+// on the nicest default:
 //   mica    — Windows 11 22H2+ Mica (subtle, tied to the desktop wallpaper)
-//   acrylic — stronger, more translucent acrylic
+//   acrylic — stronger, more translucent acrylic (default)
 //   tabbed  — Mica Alt
 //   blur    — force the legacy Windows 10 blur-behind path
-// Anything else (or unset) keeps the default opaque window.
 enum class GlassBackdrop {
 	Off,
 	Mica,
@@ -124,19 +125,20 @@ enum class GlassBackdrop {
 };
 
 [[nodiscard]] GlassBackdrop RequestedGlassBackdrop() {
-	static const auto result = [] {
+	if (!AyuSettings::getInstance().windowGlassBackdrop()) {
+		return GlassBackdrop::Off;
+	}
+	static const auto material = [] {
 		const auto value = qEnvironmentVariable("AYUGRAM_GLASS").toLower();
 		return (value == u"mica"_q)
 			? GlassBackdrop::Mica
-			: (value == u"acrylic"_q)
-			? GlassBackdrop::Acrylic
 			: (value == u"tabbed"_q || value == u"micaalt"_q)
 			? GlassBackdrop::Tabbed
 			: (value == u"blur"_q)
 			? GlassBackdrop::Blur
-			: GlassBackdrop::Off;
+			: GlassBackdrop::Acrylic;
 	}();
-	return result;
+	return material;
 }
 
 void ApplyGlassBackdrop(HWND hWnd, bool night) {

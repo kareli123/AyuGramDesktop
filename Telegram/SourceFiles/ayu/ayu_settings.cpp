@@ -655,6 +655,14 @@ void AyuSettings::setIncreaseWebviewWidth(bool val) {
 	save();
 }
 
+void AyuSettings::setWindowGlassBackdrop(bool val) {
+	if (_windowGlassBackdrop.current() == val) return;
+	_windowGlassBackdrop = val;
+	// Takes effect on the next launch: the window has to be created
+	// translucent before the compositor backdrop can show through it.
+	save();
+}
+
 void AyuSettings::setMaterialSwitches(bool val) {
 	if (_materialSwitches.current() == val) return;
 	_materialSwitches = val;
@@ -1100,6 +1108,7 @@ void to_json(nlohmann::json &j, const AyuSettings &s) {
 		{"increaseWebviewHeight", s._increaseWebviewHeight.current()},
 		{"increaseWebviewWidth", s._increaseWebviewWidth.current()},
 		{"materialSwitches", s._materialSwitches.current()},
+		{"windowGlassBackdrop", s._windowGlassBackdrop.current()},
 		{"removeMessageTail", s._removeMessageTail.current()},
 		{"disableNotificationsDelay", s._disableNotificationsDelay.current()},
 		{"localPremium", s._localPremium.current()},
@@ -1204,6 +1213,7 @@ void from_json(const nlohmann::json &j, AyuSettings &s) {
 	s._increaseWebviewHeight = j.value("increaseWebviewHeight", defaults._increaseWebviewHeight.current());
 	s._increaseWebviewWidth = j.value("increaseWebviewWidth", defaults._increaseWebviewWidth.current());
 	s._materialSwitches = j.value("materialSwitches", defaults._materialSwitches.current());
+	s._windowGlassBackdrop = j.value("windowGlassBackdrop", defaults._windowGlassBackdrop.current());
 	s._removeMessageTail = j.value("removeMessageTail", defaults._removeMessageTail.current());
 	s._disableNotificationsDelay = j.value("disableNotificationsDelay", defaults._disableNotificationsDelay.current());
 	s._localPremium = j.value("localPremium", defaults._localPremium.current());

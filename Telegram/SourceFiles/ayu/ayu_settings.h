@@ -288,6 +288,7 @@ public:
 	[[nodiscard]] bool increaseWebviewHeight() const { return _increaseWebviewHeight.current(); }
 	[[nodiscard]] bool increaseWebviewWidth() const { return _increaseWebviewWidth.current(); }
 	[[nodiscard]] bool materialSwitches() const { return _materialSwitches.current(); }
+	[[nodiscard]] bool windowGlassBackdrop() const { return _windowGlassBackdrop.current(); }
 	[[nodiscard]] bool removeMessageTail() const { return _removeMessageTail.current(); }
 	[[nodiscard]] bool disableNotificationsDelay() const { return _disableNotificationsDelay.current(); }
 	[[nodiscard]] bool localPremium() const { return _localPremium.current(); }
@@ -375,6 +376,7 @@ public:
 	void setIncreaseWebviewHeight(bool val);
 	void setIncreaseWebviewWidth(bool val);
 	void setMaterialSwitches(bool val);
+	void setWindowGlassBackdrop(bool val);
 	void setRemoveMessageTail(bool val);
 	void setDisableNotificationsDelay(bool val);
 	void setLocalPremium(bool val);
@@ -485,6 +487,8 @@ public:
 	[[nodiscard]] rpl::producer<bool> increaseWebviewWidthChanges() const { return _increaseWebviewWidth.changes(); }
 	[[nodiscard]] rpl::producer<bool> materialSwitchesValue() const { return _materialSwitches.value(); }
 	[[nodiscard]] rpl::producer<bool> materialSwitchesChanges() const { return _materialSwitches.changes(); }
+	[[nodiscard]] rpl::producer<bool> windowGlassBackdropValue() const { return _windowGlassBackdrop.value(); }
+	[[nodiscard]] rpl::producer<bool> windowGlassBackdropChanges() const { return _windowGlassBackdrop.changes(); }
 	[[nodiscard]] rpl::producer<bool> removeMessageTailValue() const { return _removeMessageTail.value(); }
 	[[nodiscard]] rpl::producer<bool> removeMessageTailChanges() const { return _removeMessageTail.changes(); }
 	[[nodiscard]] rpl::producer<bool> disableNotificationsDelayValue() const { return _disableNotificationsDelay.value(); }
@@ -645,6 +649,7 @@ private:
 	rpl::variable<bool> _increaseWebviewHeight = false;
 	rpl::variable<bool> _increaseWebviewWidth = false;
 	rpl::variable<bool> _materialSwitches = true;
+	rpl::variable<bool> _windowGlassBackdrop = false;
 	rpl::variable<bool> _removeMessageTail = false;
 	rpl::variable<bool> _disableNotificationsDelay = false;
 	rpl::variable<bool> _localPremium = false;
