@@ -254,7 +254,7 @@ infoTopBar: InfoTopBar {
 	radius: 0px;
 }
 infoTopBarScale: 0.7;
-infoTopBarDuration: 150;
+infoTopBarDuration: 220;
 
 infoLayerTopMinimal: 20px;
 infoLayerTopMaximal: 40px;

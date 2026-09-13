@@ -117,6 +117,26 @@ struct WINDOWCOMPOSITIONATTRIBDATA {
 	SIZE_T cbData;
 };
 
+// Undocumented accent policy, used for the acrylic / blur-behind backdrop
+// on Windows 10 and early Windows 11 builds that lack
+// DWMWA_SYSTEMBACKDROP_TYPE.
+enum class ACCENT_STATE {
+	ACCENT_DISABLED = 0,
+	ACCENT_ENABLE_GRADIENT = 1,
+	ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+	ACCENT_ENABLE_BLURBEHIND = 3,
+	ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
+	ACCENT_ENABLE_HOSTBACKDROP = 5,
+	ACCENT_INVALID_STATE = 6,
+};
+
+struct ACCENT_POLICY {
+	ACCENT_STATE AccentState;
+	DWORD AccentFlags;
+	DWORD GradientColor; // AABBGGRR
+	DWORD AnimationId;
+};
+
 inline BOOL(__stdcall *SetWindowCompositionAttribute)(
 	HWND hWnd,
 	WINDOWCOMPOSITIONATTRIBDATA*);

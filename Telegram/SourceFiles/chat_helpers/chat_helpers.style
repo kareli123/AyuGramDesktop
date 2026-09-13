@@ -480,10 +480,10 @@ emojiPanWidth: 345px;
 emojiPanMinHeight: 278px;
 emojiPanMaxHeight: 640px;
 emojiPanHeightRatio: 0.75;
-emojiPanShowDuration: 200;
-emojiPanDuration: 200;
+emojiPanShowDuration: 260;
+emojiPanDuration: 260;
 emojiPanHover: windowBgOver;
-emojiPanSlideDuration: 200;
+emojiPanSlideDuration: 260;
 emojiPanArea: size(34px, 32px);
 emojiPanRadius: 8px;
 emojiPanReactionsPreviewPadding: margins(10px, 20px, 10px, 20px);
@@ -1166,7 +1166,7 @@ historyToDownBadgeFont: semiboldFont;
 historyToDownBadgeSize: 22px;
 
 historyToDownShownAfter: 480px;
-historyToDownDuration: 150;
+historyToDownDuration: 200;
 
 historyPullNextThreshold: 48px;
 historyPullNextExpand: 110px;

@@ -1,0 +1,150 @@
+// Apple Liquid Glass — Dark (translucent / real glass)
+//
+// Same look as apple-liquid-glass-dark, but the panel surfaces carry alpha so
+// the Windows compositor backdrop (Mica / Acrylic) shows through them.
+//
+// THIS FILE ALONE DOES NOTHING SPECIAL — alpha only becomes visible when the
+// window itself is translucent. Launch the client with the backdrop enabled:
+//
+//     set AYUGRAM_GLASS=acrylic      (or: mica / tabbed / blur)
+//     AyuGram.exe
+//
+// Without AYUGRAM_GLASS the alpha is composited onto an opaque background and
+// you simply get the regular dark theme. Use the non-translucent
+// apple-liquid-glass-dark.tdesktop-palette in that case.
+//
+// Colors are RGB (#rrggbb) or RGBA (#rrggbbaa) — alpha is the LAST byte.
+
+//// TRANSLUCENT SURFACES ////
+// ~80% opacity reads as glass while keeping text contrast acceptable.
+windowBg: #1c1c1ecc;
+dialogsBg: #1c1c1eb3;              // list is lighter, more glass
+boxBg: #1c1c1ee6;                  // dialogs need more opacity to stay legible
+menuBg: #2c2c2ee6;
+menuBgOver: #3a3a3cf2;
+historyComposeAreaBg: #1c1c1ecc;
+titleBg: #1c1c1e99;                // title bar is the most glassy part
+titleBgActive: #1c1c1e99;
+sideBarBg: #000000b3;
+
+//// GLOBAL WINDOW ////
+windowFg: #ffffff;
+windowBgOver: #2c2c2ecc;
+windowBgRipple: #3a3a3ccc;
+windowFgOver: #ffffff;
+windowSubTextFg: #98989f;
+windowSubTextFgOver: #aeaeb2;
+windowBoldFg: #ffffff;
+windowBoldFgOver: #ffffff;
+windowActiveTextFg: #0a84ff;
+windowShadowFg: #000000;
+windowShadowFgFallback: #1c1c1e;
+
+windowBgActive: #0a84ff;
+windowFgActive: #ffffff;
+windowActiveTextFgActive: #ffffff;
+
+//// ACCENT BUTTONS ////
+activeButtonBg: #0a84ff;
+activeButtonBgOver: #339dff;
+activeButtonBgRipple: #0060df;
+activeButtonFg: #ffffff;
+activeButtonFgOver: #ffffff;
+
+lightButtonBg: #1c1c1e00;          // fully transparent, glass shows through
+lightButtonBgOver: #2c2c2ecc;
+lightButtonBgRipple: #3a3a3ccc;
+lightButtonFg: #0a84ff;
+lightButtonFgOver: #339dff;
+
+//// SEPARATORS / SHADOWS ////
+shadowFg: #00000066;
+dividerFg: #ffffff14;              // hairline over glass
+titleShadow: #ffffff08;
+
+//// SCROLLBAR ////
+scrollBarBg: #ffffff26;
+scrollBarBgOver: #ffffff40;
+
+//// TITLE BAR ////
+titleButtonFg: #98989f;
+titleButtonFgOver: #ffffff;
+titleButtonBgOver: #2c2c2ecc;
+titleButtonCloseBgOver: #ff453a;
+titleFg: #98989f;
+titleFgActive: #ffffff;
+
+//// LEFT SIDEBAR ////
+sideBarBgActive: #0a84ff;
+sideBarTextFg: #98989f;
+sideBarTextFgActive: #ffffff;
+sideBarIconFg: #98989f;
+sideBarIconFgActive: #ffffff;
+sideBarBadgeBg: #ff453a;
+sideBarBadgeFg: #ffffff;
+
+//// DIALOGS LIST ////
+dialogsNameFg: #ffffff;
+dialogsDateFg: #98989f;
+dialogsTextFg: #98989f;
+dialogsTextFgService: #0a84ff;
+dialogsDraftFg: #ff453a;
+dialogsUnreadBg: #0a84ff;
+dialogsUnreadBgMuted: #48484a;
+dialogsUnreadFg: #ffffff;
+
+dialogsBgOver: #2c2c2ecc;
+dialogsNameFgOver: #ffffff;
+dialogsTextFgOver: #aeaeb2;
+
+dialogsBgActive: #0a84ffe6;
+dialogsNameFgActive: #ffffff;
+dialogsDateFgActive: #ffffff;
+dialogsTextFgActive: #ffffffe6;
+dialogsTextFgServiceActive: #ffffff;
+dialogsUnreadBgActive: #ffffff;
+dialogsUnreadFgActive: #0a84ff;
+dialogsRippleBg: #3a3a3ccc;
+dialogsRippleBgActive: #339dffe6;
+
+//// CHAT HISTORY ////
+historyComposeAreaFg: #ffffff;
+historyComposeIconFg: #98989f;
+historyComposeIconFgOver: #0a84ff;
+historySendIconFg: #0a84ff;
+historyScrollBarBg: #ffffff26;
+historyScrollBarBgOver: #ffffff40;
+
+// Bubbles stay fairly opaque so text remains readable over the blur.
+msgInBg: #2c2c2ee6;
+msgInBgSelected: #0a84ff66;
+msgInShadow: #00000000;
+historyTextInFg: #ffffff;
+msgInDateFg: #98989f;
+msgInServiceFg: #0a84ff;
+
+msgOutBg: #0a84ffe6;
+msgOutBgSelected: #339dffe6;
+msgOutShadow: #00000000;
+historyTextOutFg: #ffffff;
+msgOutDateFg: #ffffffb2;
+msgOutServiceFg: #ffffff;
+
+msgOutCheckFg: #ffffff;
+msgInCheckFg: #0a84ff;
+
+msgServiceBg: #00000059;
+msgServiceFg: #ffffff;
+
+//// BOXES / MENUS ////
+boxTextFg: #ffffff;
+boxTitleFg: #ffffff;
+boxDividerBg: #00000066;
+menuIconFg: #98989f;
+menuIconFgOver: #ffffff;
+menuFg: #ffffff;
+
+//// FIELDS ////
+inputBorderFg: #ffffff26;
+activeLineFg: #0a84ff;
+activeLineFgError: #ff453a;

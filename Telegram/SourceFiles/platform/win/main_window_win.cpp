@@ -39,6 +39,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include <shellapi.h>
 #include <WtsApi32.h>
 #include <dwmapi.h>
+#include <uxtheme.h> // MARGINS, for the glass backdrop below.
 
 #include <windows.ui.viewmanagement.h>
 #include <UIViewSettingsInterop.h>
@@ -101,6 +102,113 @@ private:
 
 };
 
+
+// Apple-style "liquid glass" window backdrop.
+//
+// The compositor draws the blurred material *behind* the window, so it only
+// becomes visible where the client area is not painted opaque — pair this
+// with a translucent palette (see themes/ in the repository root).
+//
+// Experimental, so it is opt-in via the AYUGRAM_GLASS environment variable:
+//   mica    — Windows 11 22H2+ Mica (subtle, tied to the desktop wallpaper)
+//   acrylic — stronger, more translucent acrylic
+//   tabbed  — Mica Alt
+//   blur    — force the legacy Windows 10 blur-behind path
+// Anything else (or unset) keeps the default opaque window.
+enum class GlassBackdrop {
+	Off,
+	Mica,
+	Acrylic,
+	Tabbed,
+	Blur,
+};
+
+[[nodiscard]] GlassBackdrop RequestedGlassBackdrop() {
+	static const auto result = [] {
+		const auto value = qEnvironmentVariable("AYUGRAM_GLASS").toLower();
+		return (value == u"mica"_q)
+			? GlassBackdrop::Mica
+			: (value == u"acrylic"_q)
+			? GlassBackdrop::Acrylic
+			: (value == u"tabbed"_q || value == u"micaalt"_q)
+			? GlassBackdrop::Tabbed
+			: (value == u"blur"_q)
+			? GlassBackdrop::Blur
+			: GlassBackdrop::Off;
+	}();
+	return result;
+}
+
+void ApplyGlassBackdrop(HWND hWnd, bool night) {
+	const auto kind = RequestedGlassBackdrop();
+	if (!hWnd || kind == GlassBackdrop::Off) {
+		return;
+	}
+	static const auto kBuild
+		= QOperatingSystemVersion::current().microVersion();
+
+	// Without extending the frame into the client area DWM has nothing to
+	// render the material into.
+	auto margins = MARGINS{ -1, -1, -1, -1 };
+	DwmExtendFrameIntoClientArea(hWnd, &margins);
+
+	// Windows 11 22H2+: documented backdrop types.
+	if (kBuild >= 22621 && kind != GlassBackdrop::Blur) {
+		constexpr auto kDWMWA_SYSTEMBACKDROP_TYPE = DWORD(38);
+		constexpr auto kDWMSBT_MAINWINDOW = DWORD(2); // Mica.
+		constexpr auto kDWMSBT_TRANSIENTWINDOW = DWORD(3); // Acrylic.
+		constexpr auto kDWMSBT_TABBEDWINDOW = DWORD(4); // Mica Alt.
+		const auto value = (kind == GlassBackdrop::Acrylic)
+			? kDWMSBT_TRANSIENTWINDOW
+			: (kind == GlassBackdrop::Tabbed)
+			? kDWMSBT_TABBEDWINDOW
+			: kDWMSBT_MAINWINDOW;
+		const auto result = DwmSetWindowAttribute(
+			hWnd,
+			kDWMWA_SYSTEMBACKDROP_TYPE,
+			&value,
+			sizeof(value));
+		if (SUCCEEDED(result)) {
+			return;
+		}
+	}
+
+	// Windows 11 21H2: undocumented Mica toggle, no acrylic equivalent.
+	if (kBuild >= 22000
+		&& (kind == GlassBackdrop::Mica || kind == GlassBackdrop::Tabbed)) {
+		constexpr auto kDWMWA_MICA_EFFECT = DWORD(1029);
+		auto enable = BOOL(TRUE);
+		const auto result = DwmSetWindowAttribute(
+			hWnd,
+			kDWMWA_MICA_EFFECT,
+			&enable,
+			sizeof(enable));
+		if (SUCCEEDED(result)) {
+			return;
+		}
+	}
+
+	// Windows 10 fallback: undocumented accent policy.
+	if (!Dlls::SetWindowCompositionAttribute) {
+		return;
+	}
+	// GradientColor is AABBGGRR: a subtle tint matching the palettes.
+	const auto tint = night ? DWORD(0x991E1C1C) : DWORD(0x99F7F2F2);
+	auto policy = Dlls::ACCENT_POLICY{
+		(kind == GlassBackdrop::Blur)
+			? Dlls::ACCENT_STATE::ACCENT_ENABLE_BLURBEHIND
+			: Dlls::ACCENT_STATE::ACCENT_ENABLE_ACRYLICBLURBEHIND,
+		DWORD(2), // Draw the tint across the whole client area.
+		tint,
+		DWORD(0),
+	};
+	auto data = Dlls::WINDOWCOMPOSITIONATTRIBDATA{
+		Dlls::WINDOWCOMPOSITIONATTRIB::WCA_ACCENT_POLICY,
+		&policy,
+		sizeof(policy),
+	};
+	Dlls::SetWindowCompositionAttribute(hWnd, &data);
+}
 
 [[nodiscard]] HICON NativeIcon(const QIcon &icon, QSize size) {
 	if (!icon.isNull()) {
@@ -703,6 +811,13 @@ void MainWindow::updateTaskbarAndIconCounters() {
 }
 
 void MainWindow::initHook() {
+	if (RequestedGlassBackdrop() != GlassBackdrop::Off) {
+		// Has to happen before winId() realizes the native window below,
+		// otherwise Qt would need to recreate it for this to take effect.
+		// Only then does the alpha of a translucent palette reach the
+		// compositor and let the backdrop material show through.
+		setAttribute(Qt::WA_TranslucentBackground);
+	}
 	_hWnd = reinterpret_cast<HWND>(winId());
 	if (!_hWnd) {
 		return;
@@ -731,6 +846,10 @@ void MainWindow::initHook() {
 }
 
 void MainWindow::validateWindowTheme(bool native, bool night) {
+	// Before the early returns below: the glass backdrop has to be
+	// re-applied for both frame modes and on every theme change.
+	ApplyGlassBackdrop(_hWnd, night);
+
 	if (!IsWindows8OrGreater()) {
 		const auto empty = native ? nullptr : L" ";
 		SetWindowTheme(_hWnd, empty, empty);

@@ -15,7 +15,7 @@ using "boxes/boxes.style";
 using "calls/calls.style";
 using "chat_helpers/chat_helpers.style";
 
-mediaviewOverDuration: 150;
+mediaviewOverDuration: 200;
 
 mediaviewPlayback: MediaSlider {
 	width: 3px;
@@ -272,8 +272,8 @@ mediaviewIconOver: 36px;
 
 mediaviewWaitHide: 1100;
 mediaviewHideDuration: 600;
-mediaviewShowDuration: 200;
-mediaviewFadeDuration: 150;
+mediaviewShowDuration: 260;
+mediaviewFadeDuration: 200;
 
 mediaviewDeltaFromLastAction: 5px;
 mediaviewSwipeDistance: 80px;
