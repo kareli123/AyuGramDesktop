@@ -521,7 +521,7 @@ stage('lzma', """
 win:
     git clone https://github.com/desktop-app/lzma.git
     cd lzma\\C\\Util\\LzmaLib
-    SET "ToolsetProp="
+    SET "ToolsetProp=/property:PlatformToolset=v145"
 winarm:
     SET "ToolsetProp=/property:PlatformToolset=v145"
 win:
@@ -1048,6 +1048,7 @@ stage('libjxl', """
     -DJPEGXL_WARNINGS_AS_ERRORS=OFF
 """) + """
 win:
+    powershell -Command "(Get-Content lib\\jxl\\base\\common.h) -replace '#elif JXL_COMPILER_MSVC', '#elif 0 //' | Set-Content lib\\jxl\\base\\common.h"
     cmake . ^
         -DCMAKE_INSTALL_PREFIX=%LIBS_DIR%/local ^
         -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded$<$<CONFIG:Debug>:Debug>" ^
@@ -1080,10 +1081,12 @@ win:
     SET CHERE_INVOKING=enabled_from_arguments
     SET MSYS2_PATH_TYPE=inherit
 
+win64:
+    python \"""" + os.path.join(scriptPath, 'patch_msvc_toolset.py') + """\" configure
 win32:
     SET "TOOLCHAIN=x86-win32-vs17"
 win64:
-    SET "TOOLCHAIN=x86_64-win64-vs17"
+    SET "TOOLCHAIN=x86_64-win64-vs17-v145"
 winarm:
     SET "TOOLCHAIN=arm64-win64-vs17-v145"
 win:
@@ -1409,7 +1412,7 @@ depends:patches/breakpad.diff
 win:
     SET "PYTHONUTF8=1"
     SET "FolderPostfix="
-    SET "ToolsetProp="
+    SET "ToolsetProp=/property:PlatformToolset=v145"
 win64:
     SET "FolderPostfix=_x64"
 winarm:
@@ -1424,9 +1427,6 @@ depends:python/Scripts/activate.bat
     ninja -C out/Debug%FolderPostfix% common crash_generation_client exception_handler
 release:
     ninja -C out/Release%FolderPostfix% common crash_generation_client exception_handler
-    cd tools\\windows\\dump_syms
-    gyp dump_syms.gyp --format=msvs
-    msbuild -m dump_syms.vcxproj /property:Configuration=Release /property:Platform="x64" %ToolsetProp%
 win:
     deactivate
 mac:
